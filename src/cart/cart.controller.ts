@@ -77,7 +77,11 @@ export class CartController {
      
         return response ? { exists: true, ...response } : { exists: false };
       }
-      
+      @Get("find_by_type/:user_id")
+      async findByUserID(@Param('user_id') user_id: number) {
+          const response = await this.i_service.findByUserID(user_id);
+          return response;
+      }
   
   
 }

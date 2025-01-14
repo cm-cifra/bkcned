@@ -75,13 +75,20 @@ import { ProductsImgModule } from './products_img/products_img.module';
 import { UserCartsController } from './user_carts/user_carts.controller';
 import { UserCartsService } from './user_carts/user_carts.service';
 import { UserCartsModule } from './user_carts/user_carts.module';
-import { CartModule } from './cart/cart.module'; 
-import { CartService } from './cart/cart.service'; 
-import { CartController } from './cart/cart.controller'; 
+import { CartModule } from './cart/cart.module';
+import { CartService } from './cart/cart.service';
+import { CartController } from './cart/cart.controller';
+import { I18nModule } from 'nestjs-i18n';
 @Module({
   imports: [
     MulterModule.register({
       dest: '../images'
+    }), I18nModule.forRoot({
+      fallbackLanguage: 'en',  
+      loaderOptions: {
+        path: './i18n',  
+        watch: true,  
+      },
     }),
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forFeature(entities),
@@ -94,7 +101,7 @@ import { CartController } from './cart/cart.controller';
       database: process.env.DATABASE_NAME,
       entities: entities,
       synchronize: false,
-    }),CartModule,
+    }), CartModule,
     InfoBathRoomAccessoriesModule,
     InfoBathsDisabledModule,
     InfoCounterTopSinkModule,
@@ -120,8 +127,8 @@ import { CartController } from './cart/cart.controller';
     ProductsImgModule,
     UserCartsModule
   ],
-  controllers: [AppController, 
-    InfoBathsDisabledController, 
+  controllers: [AppController,
+    InfoBathsDisabledController,
     InfoCounterTopSinkController,
     InfoKitchenSinkController,
     InfoKitsController,
@@ -136,17 +143,17 @@ import { CartController } from './cart/cart.controller';
     UserOrdersController,
     UserOrdersListController,
     InventoryController,
-    UserMenuController,CartController,
+    UserMenuController, CartController,
     UserTypeMenuController,
     CategoriesController,
-  CollectionsController,
-  ProductKitsController,
-  ProductsImgController,
-  UserCartsController],
+    CollectionsController,
+    ProductKitsController,
+    ProductsImgController,
+    UserCartsController],
   providers: [AppService, CartService,
-    InfoBathRoomAccessoriesService, 
-    InfoBathsDisabledService, 
-    InfoCounterTopSinkService, 
+    InfoBathRoomAccessoriesService,
+    InfoBathsDisabledService,
+    InfoCounterTopSinkService,
     InfoKitchenSinkService,
     InfoKitsService,
     InfoMirrorCabinetsService,
@@ -167,6 +174,6 @@ import { CartController } from './cart/cart.controller';
     ProductKitsService,
     ProductsImgService,
     UserCartsService,
-    ],
+  ],
 })
-export class AppModule {}
+export class AppModule { }

@@ -22,7 +22,7 @@ export class CartService {
  
          query.leftJoinAndMapOne('carts.user_id', UsersEntity, 'user', 'carts.user_id = user.id')
              .leftJoinAndMapOne('carts.product_id', ProductsEntity, 'product', 'carts.product_id = product.id')
-             .leftJoinAndMapOne('carts.user_cart_id', UserCartsEntity, 'usercart', 'carts.user_cart_id = usercart.id')
+          
  
          const results = await query
              .orderBy('carts.datetime_added', 'DESC')
@@ -129,7 +129,15 @@ export class CartService {
  
          return result || null;
      }
- 
+     async findByUserID(user_id: number) {
+        const query = this.i_repository.createQueryBuilder('carts');
+
+        query.orderBy('carts.datetime_added', 'DESC');
+
+        const result = await query.getOne();
+
+        return result || null;
+    }
  
  
 }

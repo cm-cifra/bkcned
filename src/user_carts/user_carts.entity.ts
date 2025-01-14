@@ -1,6 +1,6 @@
 import { Column, Entity, PrimaryGeneratedColumn, Unique } from "typeorm";
 
-@Entity({ name: "user_carts"})
+@Entity({ name: "user_carts" })
 export class UserCartsEntity {
     @PrimaryGeneratedColumn()
     id: number
@@ -16,8 +16,13 @@ export class UserCartsEntity {
 
     @Column()
     status: number
+
     @Column()
     type: number
+
+    @Column()
+    price: number
+
     @Column()
     datetime_added: string
 

@@ -16,10 +16,16 @@ export class CartsEntity {
 
   @Column()
   status: number
+  
   @Column()
   type: number
-   @Column()
-  user_cart_id: number
+
+  @Column()
+  user_cart_id: string
+
+  @Column()
+  price: number
+
   @Column()
   datetime_added: string
 

@@ -28,19 +28,19 @@ export class InfoPedestalsController {
     }
 
     @Post('add')
-    async addItem(@Body() createUserOto: InfoPedestalsEntity){
+    async addItem(@Body() createUserOto: InfoPedestalsEntity) {
         const response = await this.i_service.addItem(createUserOto);
         return response;
     }
 
     @Post("edit")
-    async editItem(@Body() data:any) {
+    async editItem(@Body() data: any) {
         const response = await this.i_service.editItem(data);
         return response;
     }
 
     @Post("delete")
-    async deleteItem(@Body() data:any) {
+    async deleteItem(@Body() data: any) {
         const response = await this.i_service.deleteItem(data);
         return response;
     }
@@ -59,13 +59,13 @@ export class InfoPedestalsController {
 
     @Post("bulk")
     async createBulk(@Body() createUserOto: InfoPedestalsEntity[]) {
-      try {
-        const response = await this.i_service.createBulk(createUserOto);
-        return { success: true, data: response };
-      } catch (error) {
-        console.error("Error saving bulk data:", error.message);
-        throw new BadRequestException("Error saving bulk data");
-      }
+        try {
+            const response = await this.i_service.createBulk(createUserOto);
+            return { success: true, data: response };
+        } catch (error) {
+            console.error("Error saving bulk data:", error.message);
+            throw new BadRequestException("Error saving bulk data");
+        }
     }
 
 
