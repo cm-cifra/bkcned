@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Delete, Get, HttpStatus, Param, Post, Put, Res } from "@nestjs/common";
+import { BadRequestException, Body, Controller, Delete, Get, HttpStatus, Param, Post, Put, Res, Query } from "@nestjs/common";
 import { InfoPedestalsService } from "./info_pedestals.service";
 import { InfoPedestalsEntity } from "./info_pedestals.entity";
 
@@ -56,7 +56,14 @@ export class InfoPedestalsController {
         const response = await this.i_service.findItemByProduct(id);
         return response;
     }
-
+    @Get("searchItem")
+async searchItems(
+    @Query('dimensions') dimensions?: string,
+    @Query('color_cabinet') color_cabinet?: string
+) {
+    const response = await this.i_service.searchItems({ dimensions, color_cabinet });
+    return response;
+}
     @Post("bulk")
     async createBulk(@Body() createUserOto: InfoPedestalsEntity[]) {
         try {

@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Delete, Get, HttpStatus, Param, Post, Put, Res } from "@nestjs/common";
+import { BadRequestException, Body, Controller, Delete, Get, HttpStatus, Param, Post, Put, Res ,Query} from "@nestjs/common";
 import { InfoMixersService } from "./info_mixers.service";
 import { InfoMixersEntity } from "./info_mixers.entity";
 
@@ -67,6 +67,16 @@ export class InfoMixersController {
         throw new BadRequestException("Error saving bulk data");
       }
     }
+    @Get("searchItem")
+    async searchItems( 
+        @Query('color') color?: string
+    ) {
+        const response = await this.i_service.searchItems({   color });
+        return response;
+    }
+
+
+
 
 
 }

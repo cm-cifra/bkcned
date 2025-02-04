@@ -92,7 +92,7 @@ export class InfoMirrorCabinetsService {
 
             return await this.i_repository.createQueryBuilder("info_mirrors")
             .where("info_mirrors.product_id = :id", {id : id})
-            .getOne();
+            .getMany();
         }
 
         async createBulk(user: InfoMirrorCabinetsEntity[]): Promise<InfoMirrorCabinetsEntity[]> {
@@ -100,4 +100,18 @@ export class InfoMirrorCabinetsService {
           }
 
         
+ async searchItems(filters: { dimensions?: string}) {
+    const query: any = {}; 
+    if (filters.dimensions) {
+        query.dimensions = filters.dimensions;
+    } 
+   
+    if (Object.keys(query).length === 0) {
+        return await this.i_repository.find();
+    } 
+    return await this.i_repository.find({
+        where: query,
+    });
+}
+
 }

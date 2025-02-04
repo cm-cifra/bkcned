@@ -86,22 +86,40 @@ export class InfoMixersService {
 
         async searchName(name : string){
 
-            // return await this.i_repository.createQueryBuilder("info_mixers")
-            // .where("info_mixers.description LIKE :name", {name : `%${name}%`})
-            // .getMany();
+           return await this.i_repository.createQueryBuilder("info_mixers")
+             .where("info_mixers.description LIKE :name", {name : `%${name}%`})
+             .groupBy("info_mixers.color")
+             .orderBy("info_mixers.color","DESC")
+           .getMany();
         }
 
         async findItemByProduct(id : number){
 
             return await this.i_repository.createQueryBuilder("info_mixers")
             .where("info_mixers.product_id = :id", {id : id})
-            .getOne();
+            .getMany();
         }
 
         async createBulk(user: InfoMixersEntity[]): Promise<InfoMixersEntity[]> {
             return this.i_repository.save(user);
           }
     
+
+
+          async searchItems(filters: { color?: string }) {
+            const query: any = {};
+    
+            if (filters.color) {
+                query.color = filters.color;
+            }
+            if (Object.keys(query).length === 0) {
+                return await this.i_repository.find();
+            }
+            return await this.i_repository.find({
+                where: query,
+            });
+        }
+
 
     // async assignUserRole(user: UserrolesEntity) : Promise<UserTypesEntity>{
     //     return await this.i_repository.save(user);

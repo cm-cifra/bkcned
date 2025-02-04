@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Delete, Get, HttpStatus, Param, Post, Put, Res } from "@nestjs/common";
+import { BadRequestException, Body, Controller, Delete, Get, HttpStatus, Param, Post, Put, Res ,Query} from "@nestjs/common";
 import { InfoMirrorCabinetsService } from "./info_mirror_cabinets.service";
 import { InfoMirrorCabinetsEntity } from "./info_mirror_cabinets.entity";
 
@@ -26,7 +26,15 @@ export class InfoMirrorCabinetsController {
         const response = await this.i_service.findItem(id);
         return response;
     }
-
+     @Get("searchItem")
+       async searchItems(
+           @Query('dimensions') dimensions?: string,
+          
+       ) {
+           const response = await this.i_service.searchItems({ dimensions });
+           return response;
+       }
+   
     @Post('add')
     async addItem(@Body() createUserOto: InfoMirrorCabinetsEntity){
         const response = await this.i_service.addItem(createUserOto);

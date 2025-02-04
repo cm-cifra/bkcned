@@ -1,6 +1,6 @@
 import { Column, Entity, PrimaryGeneratedColumn, Unique } from "typeorm";
 
-@Entity({ name: "info_pedestals"})
+@Entity({ name: "info_pedestals" })
 export class InfoPedestalsEntity {
     @PrimaryGeneratedColumn()
     id: number
@@ -52,6 +52,8 @@ export class InfoPedestalsEntity {
 
     @Column()
     scheme: string
+    @Column()
+    width: number
 
     @Column()
     datetime_modified: string

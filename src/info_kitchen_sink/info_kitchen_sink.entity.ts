@@ -1,6 +1,6 @@
 import { Column, Entity, PrimaryGeneratedColumn, Unique } from "typeorm";
 
-@Entity({ name: "info_kitchen_sink"})
+@Entity({ name: "info_kitchen_sink" })
 export class InfoKitchenSinkEntity {
     @PrimaryGeneratedColumn()
     id: number
@@ -28,7 +28,9 @@ export class InfoKitchenSinkEntity {
 
     @Column()
     thickness: number
-
+    
+    @Column()
+    width: number
     @Column()
     hole_for_mixer: number
 
@@ -55,7 +57,7 @@ export class InfoKitchenSinkEntity {
 
     @Column()
     package_weight: number
-    
+
     @Column()
     scheme: string
 

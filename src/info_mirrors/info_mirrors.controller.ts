@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Delete, Get, HttpStatus, Param, Post, Put, Res } from "@nestjs/common";
+import { BadRequestException, Body, Controller, Delete, Get, HttpStatus, Param, Post, Put, Res,Query } from "@nestjs/common";
 import { InfoMirrorsService } from "./info_mirrors.service";
 import { InfoMirrorsEntity } from "./info_mirrors.entity";
 
@@ -8,6 +8,16 @@ export class InfoMirrorsController {
     constructor(private i_service: InfoMirrorsService) {
 
     }
+    @Get("searchItem")
+    async searchItems(
+        @Query('dimensions') dimensions?: string,
+       
+    ) {
+        const response = await this.i_service.searchItems({ dimensions });
+        return response;
+    }
+
+
 
     @Get("get_all")
     async getAll() {

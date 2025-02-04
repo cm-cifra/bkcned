@@ -52,6 +52,7 @@ export class InfoMirrorCabinetsEntity {
 
     @Column()
     datetime_modified: string
-
+    @Column()
+    width: number
 
 }

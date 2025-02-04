@@ -19,7 +19,8 @@ export class InfoBathsDisabledEntity {
 
     @Column()
     description: string
-
+    @Column()
+    width: number
     @Column()
     drain_location: string
 

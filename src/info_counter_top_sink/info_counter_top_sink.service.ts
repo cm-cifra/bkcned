@@ -62,7 +62,7 @@ export class InfoCounterTopSinkService {
             shell_material : data.shell_material,
             sink_dimensions : data.sink_dimensions,
             table_top_material: data.table_top_material,
-            table_top_dimensions : data.table_top_dimensions,
+             dimensions : data.table_top_dimensions,
             table_top_thickness : data.table_top_thickness,
             table_top_location : data.table_top_location,
             mixer_location : data.mixer_location,
@@ -91,16 +91,18 @@ export class InfoCounterTopSinkService {
 
         async searchName(name : string){
 
-            // return await this.i_repository.createQueryBuilder("info_counter_top_sink")
-            // .where("info_counter_top_sink.description LIKE :name", {name : `%${name}%`})
-            // .getMany();
+           return await this.i_repository.createQueryBuilder("info_counter_top_sink")
+         .where("info_counter_top_sink.description LIKE :name", {name : `%${name}%`})
+           .groupBy("info_counter_top_sink.color")
+           .orderBy("info_counter_top_sink.color","DESC")
+           .getMany();
         }
 
         async findItemByProduct(id : number){
 
             return await this.i_repository.createQueryBuilder("info_counter_top_sink")
             .where("info_counter_top_sink.product_id = :id", {id : id})
-            .getOne();
+            .getMany();
         }
 
         async createBulk(user: InfoCounterTopSinkEntity[]): Promise<InfoCounterTopSinkEntity[]> {
@@ -108,6 +110,21 @@ export class InfoCounterTopSinkService {
           }
 
     
+          async searchItems(filters: { dimensions?: string; color?: string }) {
+            const query: any = {}; 
+            if (filters.dimensions) {
+                query.dimensions = filters.dimensions;
+            } 
+            if (filters.color) {
+                query.color = filters.color;
+            } 
+            if (Object.keys(query).length === 0) {
+                return await this.i_repository.find();
+            } 
+            return await this.i_repository.find({
+                where: query,
+            });
+        }
 
 
 }

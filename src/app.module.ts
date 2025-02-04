@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MulterModule } from '@nestjs/platform-express';
+import { HttpModule } from '@nestjs/axios'; // Import HttpModule
 import { InfoBathRoomAccessoriesService } from './info_bathroom_accessories/info_bathroom_accessories.service';
 import { InfoBathRoomAccessoriesModule } from './info_bathroom_accessories/info_bathroom_accessories.module';
 import { InfoBathsDisabledController } from './info_baths_disabled/info_baths_disabled.controller';
@@ -79,15 +80,36 @@ import { CartModule } from './cart/cart.module';
 import { CartService } from './cart/cart.service';
 import { CartController } from './cart/cart.controller';
 import { I18nModule } from 'nestjs-i18n';
+import { TelegramModule } from './telegram/telegram.module';
+import { TelegramService } from './telegram/telegram.service';
+import { TelegramController } from './telegram/telegram.controller';
+import { StatusService } from './status/status.service';
+import { StatusController } from './status/status.controller';
+import { StatusModule } from './status/status.module';
+import { TypeService } from './type/type.service';
+import { TypeController } from './type/type.controller';
+import { TypeModule } from './type/type.module';
+import { InvoiceInfoService } from './invoice_info/invoice_info.service';
+import { InvoiceInfoController } from './invoice_info/invoice_info.controller';
+import { InvoiceInfoModule } from './invoice_info/invoice_info.module';
+
+import { InvoiceService } from './invoice/invoice.service';
+import { InvoiceController  } from './invoice/invoice.controller';
+import { InvoiceModule } from './invoice/invoice.module';
+import { DeliveryOptionService } from './delivery_option/delivery_option.service';
+import { DeliveryOptionController } from './delivery_option/delivery_option.controller';
+import { DeliveryOptionModule } from './delivery_option/delivery_option.module';
+
 @Module({
   imports: [
     MulterModule.register({
-      dest: '../images'
-    }), I18nModule.forRoot({
-      fallbackLanguage: 'en',  
+      dest: '../images',
+    }),
+    I18nModule.forRoot({
+      fallbackLanguage: 'en',
       loaderOptions: {
-        path: './i18n',  
-        watch: true,  
+        path: './i18n',
+        watch: true,
       },
     }),
     ConfigModule.forRoot({ isGlobal: true }),
@@ -101,7 +123,8 @@ import { I18nModule } from 'nestjs-i18n';
       database: process.env.DATABASE_NAME,
       entities: entities,
       synchronize: false,
-    }), CartModule,
+    }),
+    CartModule,
     InfoBathRoomAccessoriesModule,
     InfoBathsDisabledModule,
     InfoCounterTopSinkModule,
@@ -125,10 +148,19 @@ import { I18nModule } from 'nestjs-i18n';
     CollectionsModule,
     ProductKitsModule,
     ProductsImgModule,
-    UserCartsModule
+    UserCartsModule,
+    TelegramModule,
+    HttpModule,
+    InvoiceModule,
+    StatusModule,
+    TypeModule,
+    InvoiceInfoModule,
+    DeliveryOptionModule, // Add HttpModule to imports
   ],
-  controllers: [AppController,
+  controllers: [
+    AppController,
     InfoBathsDisabledController,
+    TelegramController,
     InfoCounterTopSinkController,
     InfoKitchenSinkController,
     InfoKitsController,
@@ -143,14 +175,23 @@ import { I18nModule } from 'nestjs-i18n';
     UserOrdersController,
     UserOrdersListController,
     InventoryController,
-    UserMenuController, CartController,
+    UserMenuController,
+    CartController,
     UserTypeMenuController,
     CategoriesController,
     CollectionsController,
     ProductKitsController,
     ProductsImgController,
-    UserCartsController],
-  providers: [AppService, CartService,
+    UserCartsController,
+    StatusController,
+    TypeController,
+    InvoiceInfoController,
+    DeliveryOptionController,
+    InvoiceController
+  ],
+  providers: [
+    AppService,
+    CartService,
     InfoBathRoomAccessoriesService,
     InfoBathsDisabledService,
     InfoCounterTopSinkService,
@@ -174,6 +215,12 @@ import { I18nModule } from 'nestjs-i18n';
     ProductKitsService,
     ProductsImgService,
     UserCartsService,
+    TelegramService,
+    StatusService,
+    TypeService,
+    InvoiceInfoService,
+    DeliveryOptionService,
+    InvoiceService
   ],
 })
-export class AppModule { }
+export class AppModule {}

@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Delete, Get, HttpStatus, Param, Post, Put, Res } from "@nestjs/common";
+import { BadRequestException, Body, Controller, Delete, Get, HttpStatus, Param, Post, Put, Res ,Query} from "@nestjs/common";
 import { InfoShowerSystemsService } from "./info_shower_systems.service";
 import { InfoShowerSystemsEntity } from "./info_shower_systems.entity";
 
@@ -8,6 +8,15 @@ export class InfoShowerSystemsController {
     constructor(private i_service: InfoShowerSystemsService) {
 
     }
+      @Get("searchItem")
+        async searchItems(
+    
+        @Query('color') color?: string
+        ) {
+            const response = await this.i_service.searchItems({ color });
+            return response;
+        }
+    
 
     @Get("get_all")
     async getAll() {

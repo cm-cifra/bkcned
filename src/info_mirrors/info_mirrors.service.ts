@@ -91,7 +91,7 @@ export class InfoMirrorsService {
 
             return await this.i_repository.createQueryBuilder("info_mirrors")
             .where("info_mirrors.product_id = :id", {id : id})
-            .getOne();
+            .getMany();
         }
 
         async createBulk(user: InfoMirrorsEntity[]): Promise<InfoMirrorsEntity[]> {
@@ -99,6 +99,21 @@ export class InfoMirrorsService {
           }
 
     
+
+ async searchItems(filters: { dimensions?: string}) {
+    const query: any = {}; 
+    if (filters.dimensions) {
+        query.dimensions = filters.dimensions;
+    } 
+   
+    if (Object.keys(query).length === 0) {
+        return await this.i_repository.find();
+    } 
+    return await this.i_repository.find({
+        where: query,
+    });
+}
+
 
     // async assignUserRole(user: UserrolesEntity) : Promise<UserTypesEntity>{
     //     return await this.i_repository.save(user);

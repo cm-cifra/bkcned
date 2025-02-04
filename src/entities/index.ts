@@ -23,7 +23,23 @@ import { UserTypesEntity } from "src/user_types/user_types.entity";
 import { UsersEntity } from "src/users/users.entity";
 import { CartsEntity } from "src/cart/cart.entity";
 
+import { Chat } from "src/telegram/telegramEntity/chat.entity";
+import { Message } from "src/telegram/telegramEntity/message.entity";
+import { StatusEntity } from "src/status/status.entity";
+import { TypeEntity } from "src/type/type.entity";
+import { InvoiceEntity } from "src/invoice/invoice.entity";
+import { InvoiceInfoEntity } from "src/invoice_info/invoice_info.entity";
+import { DeliveryEntity } from "src/delivery_option/delivery_option.entity";
+
+
 const entities = [CartsEntity,
+    Message,
+    Chat,
+    DeliveryEntity,
+    TypeEntity,
+    StatusEntity,
+    InvoiceInfoEntity,
+    InvoiceEntity,
     CategoriesEntity,
     CollectionsEntity,
     InfoBathRoomAccessoriesEntity,
@@ -57,6 +73,8 @@ export {
     InfoBathRoomAccessoriesEntity,
     InfoBathsDisabledEntity,
     InfoCounterTopSinkEntity,
+    Message,
+    Chat,
     InfoKitchenSinkEntity,
     InfoKitsEntity,
     InfoMirrorCabinetsEntity,
@@ -74,7 +92,12 @@ export {
     UserTypeMenuEntity,
     ProductKitsEntity,
     ProductsImgEntity,
-    UserCartsEntity
+    UserCartsEntity,
+    TypeEntity,
+    StatusEntity,
+    InvoiceInfoEntity,
+    InvoiceEntity,
+    DeliveryEntity,
 };
 
 export default entities;

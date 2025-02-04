@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Delete, Get, HttpStatus, Param, Post, Put, Res } from "@nestjs/common";
+import { BadRequestException, Body, Controller, Delete, Get, HttpStatus, Param, Post, Put, Res,Query } from "@nestjs/common";
 import { InfoKitchenSinkService } from "./info_kitchen_sink.service";
 import { InfoKitchenSinkEntity } from "./info_kitchen_sink.entity";
 
@@ -50,6 +50,17 @@ export class InfoKitchenSinkController {
         const response = await this.i_service.searchName(name);
         return response;
     }
+
+      @Get("searchItem")
+    async searchItems(
+        @Query('dimensions') dimensions?: string,
+        @Query('color') color?: string
+    ) {
+        const response = await this.i_service.searchItems({ dimensions, color });
+        return response;
+    }
+
+
 
     @Get("find_by_product/:id")
     async findItemByProduct(@Param('id') id: number) {

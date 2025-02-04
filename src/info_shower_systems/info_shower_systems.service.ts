@@ -86,9 +86,11 @@ export class InfoShowerSystemsService {
 
         async searchName(name : string){
 
-            // return await this.i_repository.createQueryBuilder("info_shower_systems")
-            // .where("info_shower_systems.description LIKE :name", {name : `%${name}%`})
-            // .getMany();
+          return await this.i_repository.createQueryBuilder("info_shower_systems")
+            .where("info_shower_systems.description LIKE :name", {name : `%${name}%`})
+            .groupBy("info_shower_systems.color")
+            .orderBy("info_shower_systems.color","DESC")
+           .getMany();
         }
 
         async findItemByProduct(id : number){
@@ -102,6 +104,21 @@ export class InfoShowerSystemsService {
             return this.i_repository.save(user);
           }
     
+
+          async searchItems(filters: { color?: string }) {
+            const query: any = {};
+    
+            if (filters.color) {
+                query.color = filters.color;
+            }
+            if (Object.keys(query).length === 0) {
+                return await this.i_repository.find();
+            }
+            return await this.i_repository.find({
+                where: query,
+            });
+        }
+
 
     // async assignUserRole(user: UserrolesEntity) : Promise<UserTypesEntity>{
     //     return await this.i_repository.save(user);

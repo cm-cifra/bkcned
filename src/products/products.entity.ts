@@ -1,6 +1,6 @@
 import { Column, Entity, PrimaryGeneratedColumn, Unique } from "typeorm";
 
-@Entity({ name: "products"})
+@Entity({ name: "products" })
 export class ProductsEntity {
     @PrimaryGeneratedColumn()
     id: number
@@ -25,12 +25,12 @@ export class ProductsEntity {
 
     @Column()
     price: number
-
+    @Column()
+    description: string
     @Column()
     isTrash: number
-    
+
     @Column()
     datetime_added: string
-
-
+   
 }

@@ -141,4 +141,9 @@ export class ProductsController {
             throw new BadRequestException("Error saving bulk data");
         }
     }
+    @Get("searchNot/:name")
+async searchNotName(@Param('name') name: string) {
+    const response = await this.i_service.searchName(name);
+    return response;
+}
 }

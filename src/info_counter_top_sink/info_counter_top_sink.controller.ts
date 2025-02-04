@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Delete, Get, HttpStatus, Param, Post, Put, Res } from "@nestjs/common";
+import { BadRequestException, Body, Controller, Delete, Get, HttpStatus, Param, Post, Put, Res ,Query} from "@nestjs/common";
 import { InfoCounterTopSinkService } from "./info_counter_top_sink.service";
 import { InfoCounterTopSinkEntity } from "./info_counter_top_sink.entity";
 
@@ -36,6 +36,14 @@ export class InfoCounterTopSinkController {
     @Post("edit")
     async editItem(@Body() data:any) {
         const response = await this.i_service.editItem(data);
+        return response;
+    }
+    @Get("searchItem")
+    async searchItems(
+        @Query('dimensions') dimensions?: string,
+        @Query('color') color?: string
+    ) {
+        const response = await this.i_service.searchItems({ dimensions, color });
         return response;
     }
 

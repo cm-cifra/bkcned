@@ -33,7 +33,7 @@ export class InfoCounterTopSinkEntity {
     table_top_material: string
 
     @Column()
-    table_top_dimensions: string
+    dimensions: string
 
     @Column()
     table_top_thickness: number
@@ -73,6 +73,8 @@ export class InfoCounterTopSinkEntity {
 
     @Column()
     scheme: string
+    @Column()
+    width: number
 
     @Column()
     datetime_modified: string

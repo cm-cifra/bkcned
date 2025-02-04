@@ -22,7 +22,8 @@ export class InfoMirrorsEntity {
 
     @Column()
     material: string
-
+    @Column()
+    width: number
     @Column()
     backlight_placement: string
 

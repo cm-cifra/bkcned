@@ -86,16 +86,35 @@ export class InfoKitchenSinkService {
 
         async searchName(name : string){
 
-            // return await this.i_repository.createQueryBuilder("info_kitchen_sink")
-            // .where("info_kitchen_sink.description LIKE :name", {name : `%${name}%`})
-            // .getMany();
+           return await this.i_repository.createQueryBuilder("info_kitchen_sink")
+           .where("info_kitchen_sink.description LIKE :name", {name : `%${name}%`})
+           .groupBy("info_kitchen_sink.color")
+           .orderBy("info_kitchen_sink.color","DESC")
+           .orderBy("info_kitchen_sink.color","DESC")
+           .getMany();
+        }
+
+        async searchItems(filters: { dimensions?: string; color?: string }) {
+            const query: any = {}; 
+            if (filters.dimensions) {
+                query.dimensions = filters.dimensions;
+            } 
+            if (filters.color) {
+                query.color = filters.color;
+            } 
+            if (Object.keys(query).length === 0) {
+                return await this.i_repository.find();
+            } 
+            return await this.i_repository.find({
+                where: query,
+            });
         }
 
         async findItemByProduct(id : number){
 
             return await this.i_repository.createQueryBuilder("info_kitchen_sink")
             .where("info_kitchen_sink.product_id = :id", {id : id})
-            .getOne();
+            .getMany();
         }
     
 

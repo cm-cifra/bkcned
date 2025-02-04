@@ -82,17 +82,40 @@ export class InfoPedestalsService {
 
 
     async searchName(name: string) {
-
-        // return await this.i_repository.createQueryBuilder("info_pedestals")
-        // .where("info_pedestals.description LIKE :name", {name : `%${name}%`})
-        // .getMany();
+        return await this.i_repository.createQueryBuilder("info_pedestals")
+            .where("info_pedestals.description LIKE :name", { name: `%${name}%` })
+            .groupBy("info_pedestals.color_cabinet")
+            .orderBy("info_pedestals.color_cabinet", "DESC")
+            .getMany();
     }
+  async searchItems(filters: { dimensions?: string; color_cabinet?: string }) {
+    const query: any = {};
+
+    // Add filters to the query object
+    if (filters.dimensions) {
+        query.dimensions = filters.dimensions;
+    }
+
+    if (filters.color_cabinet) {
+        query.color_cabinet = filters.color_cabinet;
+    }
+
+    // If no filters are provided, return all items
+    if (Object.keys(query).length === 0) {
+        return await this.i_repository.find();
+    }
+
+    // Apply AND logic using a single `where` object
+    return await this.i_repository.find({
+        where: query,
+    });
+}
 
     async findItemByProduct(id: number) {
 
         return await this.i_repository.createQueryBuilder("info_pedestals")
             .where("info_pedestals.product_id = :id", { id: id })
-            .getOne();
+            .getMany();
     }
 
     async createBulk(user: InfoPedestalsEntity[]): Promise<InfoPedestalsEntity[]> {

@@ -77,22 +77,38 @@ export class InfoBathRoomAccessoriesService {
 
         async searchName(name : string){
 
-            // return await this.i_repository.createQueryBuilder("info_bathroom_accessories")
-            // .where("info_bathroom_accessories.description LIKE :name", {name : `%${name}%`})
-            // .getMany();
+           return await this.i_repository.createQueryBuilder("info_bathroom_accessories")
+            .where("info_bathroom_accessories.description LIKE :name", {name : `%${name}%`})
+            .groupBy("info_bathroom_accessories.color")
+            .orderBy("info_bathroom_accessories.color","DESC")
+            .getMany();
         }
 
-        async findItemByProduct(id : number){
+       
+    async findItemByProduct(id: number) {
 
-            return await this.i_repository.createQueryBuilder("info_bathroom_accessories")
-            .where("info_bathroom_accessories.product_id = :id", {id : id})
-            .getOne();
-        }
+        return await this.i_repository.createQueryBuilder("info_bathroom_accessories")
+            .where("info_bathroom_accessories.product_id = :id", { id: id })
+            .getMany();
+    }
 
         async createBulk(user: InfoBathRoomAccessoriesEntity[]): Promise<InfoBathRoomAccessoriesEntity[]> {
             return this.i_repository.save(user);
           }
-    
+          async searchItems(filters: {  color?: string }) {
+            const query: any = {}; 
+           
+            if (filters.color) {
+                query.color = filters.color;
+            } 
+            if (Object.keys(query).length === 0) {
+                return await this.i_repository.find();
+            } 
+            return await this.i_repository.find({
+                where: query,
+            });
+        }
+
 
     // async assignUserRole(user: UserrolesEntity) : Promise<UserTypesEntity>{
     //     return await this.i_repository.save(user);

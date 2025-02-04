@@ -95,6 +95,12 @@ export class ProductsService {
         return await this.i_repository.createQueryBuilder("products")
             .where("products.name LIKE :name", { name: `%${name}%` })
             .getMany();
+    } async searchNotName(name: string) {
+        return await this.i_repository.createQueryBuilder("products")
+            .where("products.name LIKE :name", { name: `%${name}%` })
+            .groupBy("products.width")
+            .orderBy("products.width","DESC")
+            .getMany();
     }
     async searchSKU(sku: string) {
 

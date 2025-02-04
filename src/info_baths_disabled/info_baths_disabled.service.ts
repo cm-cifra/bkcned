@@ -92,13 +92,28 @@ export class InfoBathsDisabledService {
 
             return await this.i_repository.createQueryBuilder("info_baths_disabled")
             .where("info_baths_disabled.product_id = :id", {id : id})
-            .getOne();
+            .getMany();
         }
 
         async createBulk(user: InfoBathsDisabledEntity[]): Promise<InfoBathsDisabledEntity[]> {
             return this.i_repository.save(user);
           }
     
+          async searchItems(filters: { dimensions?: string; color?: string }) {
+            const query: any = {}; 
+            if (filters.dimensions) {
+                query.dimensions = filters.dimensions;
+            } 
+            if (filters.color) {
+                query.color = filters.color;
+            } 
+            if (Object.keys(query).length === 0) {
+                return await this.i_repository.find();
+            } 
+            return await this.i_repository.find({
+                where: query,
+            });
+        }
 
     // async assignUserRole(user: UserrolesEntity) : Promise<UserTypesEntity>{
     //     return await this.i_repository.save(user);
